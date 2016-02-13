@@ -1,0 +1,6 @@
+*.a
+*.c.o
+*.cc.o
+*.cpp.o
+
+dest/
