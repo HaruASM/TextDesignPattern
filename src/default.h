@@ -8,7 +8,7 @@
 
 // ## 매크로 선언 ##
 #define PAUSE() getchar()
-#define DELETE(x) delete (x); (x) = NULL ;
+#define DELETE(x) if(x){delete (x); (x) = NULL;}
 #define GETKEY(x) (scanf("%d",x));
 
 // ## 상수 모음 ##

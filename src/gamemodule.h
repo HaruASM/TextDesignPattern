@@ -1,5 +1,8 @@
 #include "default.h"
 #include "objects.h"
+#include "shop.h"
+#include "warehouse.h"
+
 // ##  CGameModule 
 // # - 이후 모듈의 확장을 대비해 각 기능별 로직을 FSM으로 나눔
 // # 멤버인 state값의 변경으로 모듈 로직 분기시킴
@@ -59,10 +62,20 @@ class CGameModule{
 
         }
         
-        CStage *selectField = NULL;
+        //## 마을 구현 부분 
+        //#  사용 변수 여기 선언해 놓음
+        CStage *selectField ; // 필드
+        CShop  *shop ; // 상점
+        CWarehouse *warehouse ; // 창고
+        
+        //#  주요 분기 로직 담당
+        //# - 상점은 shop.h : 장희
+        //# - 창고는 warehouse.h : 형민이
+        
         void progress () // 게임 진행
         {
             int input;
+            
             puts("====마을====");
             puts("...");
             puts("============");
@@ -71,6 +84,12 @@ class CGameModule{
             
             if( selectField ) // 필드 출력. 
                 selectField->draw();
+            
+            // 상점, 창고 생성, 및 초기화    
+            shop = new CShop();
+            shop->init();
+            warehouse = new CWarehouse();
+            warehouse->init();
              
             GETKEY(&input);
 
@@ -80,10 +99,14 @@ class CGameModule{
                 selectField = new CStage("사막");
             }
 
-            else if( input == 2)
-             ;
-            else if( input == 3)
-             ;
+            else if( input == 2){ // 상점
+                shop->open();
+            }
+             
+            else if( input == 3){ // 창고
+               warehouse->open();
+            }
+             
 
           
         }
@@ -122,10 +145,14 @@ public:
             exitGame();
         }
 
-    CGameModule(){}
+    CGameModule(){
+        selectField = NULL;
+        shop = NULL;
+        warehouse = NULL;
+    }
     ~ CGameModule(){
-        
-        if(selectField)
-            delete selectField;
+            DELETE(selectField);
+            DELETE(shop);
+            DELETE(warehouse);
     }
 };
