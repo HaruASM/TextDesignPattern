@@ -1,9 +1,12 @@
+#ifndef __DEFAULT_H__
+#define __DEFAULT_H__
 
 // ## 시스템 헤더 ##
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 //#include <ncurses.h>
+#include <time.h>
 
 
 // ## 매크로 선언 ##
@@ -19,3 +22,7 @@
     //yep = 10;
 //}
 
+
+
+
+#endif

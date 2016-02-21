@@ -1,6 +1,8 @@
 #include "gamemodule.h"
 
 int main(){
+    
+    srand((unsigned) time(NULL));
 
     CGameModule game;
     

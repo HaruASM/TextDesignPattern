@@ -19,7 +19,8 @@ class CGameModule{
             switch(state){
                 case 0:
                   title();
-                  changeModule(1); // 메뉴로
+                  //changeModule(1); // 메뉴로
+                  menu();
                   break;
                 case 1:
                   menu();
@@ -48,6 +49,7 @@ class CGameModule{
         {
             int input;
             
+            
             puts("====메뉴====");
             puts("1. 게임시작");
             puts("0. 종료");
@@ -68,36 +70,28 @@ class CGameModule{
         CShop  *shop ; // 상점
         CWarehouse *warehouse ; // 창고
         
+        
         //#  주요 분기 로직 담당
         //# - 상점은 shop.h : 장희
         //# - 창고는 warehouse.h : 형민이
-        
+     
         void progress () // 게임 진행
         {
-            int input;
+            int input = -1;
             
             puts("====마을====");
             puts("...");
             puts("============");
             
             puts("1.사냥터 2.상점 3.창고. 0종료");
-            
-            if( selectField ) // 필드 출력. 
-                selectField->draw();
-            
-            // 상점, 창고 생성, 및 초기화    
-            shop = new CShop();
-            shop->init();
-            warehouse = new CWarehouse();
-            warehouse->init();
-             
+           
             GETKEY(&input);
 
             if( input == 0)// 0종료
               changeModule( 4 );
-            else if( input == 1) { // 사냥터 
-                selectField = new CStage("사막");
-            }
+            else if( input == 1)  // 사냥터 
+              selectField->open();
+            
 
             else if( input == 2){ // 상점
                 shop->open();
@@ -132,6 +126,14 @@ public:
         void init(int _state = 0) // 게임 초기화
         {
             this->state = _state;
+            
+            // 상점, 창고 생성, 및 초기화    
+            selectField = new CBaseStage();
+            selectField -> init();
+            shop = new CShop();
+            shop->init();
+            warehouse = new CWarehouse();
+            warehouse->init();
         }
         
         void run()
